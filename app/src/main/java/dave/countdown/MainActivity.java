@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -208,8 +209,10 @@ public class MainActivity extends AppCompatActivity {
     public void timer() {
 
         final TextView timerTextView = findViewById(R.id.timer);
-
+        final MediaPlayer mp = MediaPlayer.create(this, R.raw.music);
+        mp.start();
         new CountDownTimer(30000, 1000) {
+
 
             @SuppressLint("SetTextI18n")
             public void onTick(long millisUntilFinished) {
