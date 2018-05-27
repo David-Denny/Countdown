@@ -1,5 +1,6 @@
 package dave.countdown;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     EditText userInput;
     String generatedString;
     String resultString;
-
+    Button restartButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +84,8 @@ public class MainActivity extends AppCompatActivity {
         generatedString = "";
         timerFlag = false;
 
+        restartButton = findViewById(R.id.restartButton);
+        restartButton.setVisibility(View.GONE);
         userInput = findViewById(R.id.userInput);
         userInput.setEnabled(false);
 
@@ -215,6 +219,7 @@ public class MainActivity extends AppCompatActivity {
                 timerTextView.setText("You're out of time!");
 
                 userInput.setEnabled(false);
+                restartButton.setVisibility(View.VISIBLE);
             }
         }.start();
     }
@@ -242,6 +247,9 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        // resets the string so input can be validated again
+        generatedString = resultString;
+
         return valid;
     }
     public void startAnswerCheck(View view) {
@@ -251,6 +259,8 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Input is not valid", Toast.LENGTH_SHORT).show();
         }
+
+        restartButton.setVisibility(View.VISIBLE);
     }
 
     public void startAnswerCheck() {
@@ -260,6 +270,8 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Input is not valid", Toast.LENGTH_SHORT).show();
         }
+
+        restartButton.setVisibility(View.VISIBLE);
     }
 
 
@@ -274,7 +286,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void restart(View view) {
-
+        finish();
+        startActivity(getIntent());
     }
 
 
@@ -326,6 +339,7 @@ public class MainActivity extends AppCompatActivity {
                 new Thread() {
                     public void run() {
                         MainActivity.this.runOnUiThread(new Runnable() {
+                            @SuppressLint("SetTextI18n")
                             public void run() {
 
                                 resultText.setText("Congratulations! You found the word '" +
@@ -364,7 +378,7 @@ public class MainActivity extends AppCompatActivity {
                     public void run() {
                         MainActivity.this.runOnUiThread(new Runnable() {
                             public void run() {
-                                Toast.makeText(MainActivity.this, "Somethings gone " +
+                                Toast.makeText(MainActivity.this, "Something's gone " +
                                                 "wrong, try again",
                                         Toast.LENGTH_SHORT).show();
                             }
