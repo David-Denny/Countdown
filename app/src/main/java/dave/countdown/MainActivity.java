@@ -109,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
         View view = this.getCurrentFocus();
         if (view != null) {
             InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            assert imm != null;
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
@@ -186,12 +187,13 @@ public class MainActivity extends AppCompatActivity {
             }
 
             resultString = generatedString;
-        } else if (charCount > 9) {
+        }
+
+        if (charCount > 9) {
             Toast.makeText(this, "You've picked all your characters!",
                     Toast.LENGTH_SHORT).show();
 
         }
-
         if (charCount == 9) {
             userInput.setEnabled(true);
             // start timer only if it has not already started
@@ -209,12 +211,13 @@ public class MainActivity extends AppCompatActivity {
 
         new CountDownTimer(30000, 1000) {
 
+            @SuppressLint("SetTextI18n")
             public void onTick(long millisUntilFinished) {
 
                 timerTextView.setText("Seconds remaining: " + millisUntilFinished / 1000);
 
             }
-
+            @SuppressLint("SetTextI18n")
             public void onFinish() {
                 timerTextView.setText("You're out of time!");
 

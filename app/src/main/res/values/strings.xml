@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">CountDown</string>
     <string name="the_timer_will_start_when_you_finish_adding_your_characters">The timer will start when you\'ve\nadded all characters.</string>
+    <string name="enter_your_answer_here">Enter your answer here</string>
+    <string name="vowel">Vowel</string>
+    <string name="consonant">Consonant</string>
+    <string name="search">Search</string>
+    <string name="restart">Restart</string>
 </resources>
