@@ -1,25 +1,25 @@
 package dave.countdown;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.telecom.Call;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
 import android.os.AsyncTask;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.Random;
 
@@ -41,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
     TextView[] textViews;
     boolean timerFlag;
     int statusCode;
+    EditText userInput;
+    String generatedString;
+    String resultString;
 
 
     @Override
@@ -76,11 +79,35 @@ public class MainActivity extends AppCompatActivity {
 
         charCount = 0;
 
+        generatedString = "";
         timerFlag = false;
 
+        userInput = findViewById(R.id.userInput);
+        userInput.setEnabled(false);
+
+        userInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    startAnswerCheck();
+                    hideSoftKeyboard();
+                    handled = true;
+                }
+                return handled;
+            }
+        });
     }
 
 
+    public void hideSoftKeyboard() {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
     public void getVowel(View view) {
 
         // generate pseudo random vowel
@@ -88,7 +115,6 @@ public class MainActivity extends AppCompatActivity {
 
         // add one to the character count
         charCount++;
-        Log.d("Char", String.valueOf(character));
 
         addCharacter(character);
 
@@ -101,8 +127,6 @@ public class MainActivity extends AppCompatActivity {
 
         // add one to the character count
         charCount++;
-
-        Log.d("Consonant", String.valueOf(character));
 
         addCharacter(character);
     }
@@ -118,40 +142,54 @@ public class MainActivity extends AppCompatActivity {
 
                 case 1:
                     textViews[0].setText(stringChar);
+                    generatedString = generatedString + stringChar;
                     break;
 
                 case 2:
                     textViews[1].setText(stringChar);
+                    generatedString = generatedString + stringChar;
                     break;
 
                 case 3:
                     textViews[2].setText(stringChar);
+                    generatedString = generatedString + stringChar;
                     break;
 
                 case 4:
                     textViews[3].setText(stringChar);
+                    generatedString = generatedString + stringChar;
                     break;
                 case 5:
                     textViews[4].setText(stringChar);
+                    generatedString = generatedString + stringChar;
                     break;
                 case 6:
                     textViews[5].setText(stringChar);
+                    generatedString = generatedString + stringChar;
                     break;
                 case 7:
                     textViews[6].setText(stringChar);
+                    generatedString = generatedString + stringChar;
                     break;
                 case 8:
                     textViews[7].setText(stringChar);
+                    generatedString = generatedString + stringChar;
                     break;
                 case 9:
                     textViews[8].setText(stringChar);
+                    generatedString = generatedString + stringChar;
                     break;
             }
+
+            resultString = generatedString;
         } else if (charCount > 9) {
             Toast.makeText(this, "You've picked all your characters!",
                     Toast.LENGTH_SHORT).show();
 
+        }
 
+        if (charCount == 9) {
+            userInput.setEnabled(true);
             // start timer only if it has not already started
             if (!timerFlag) {
                 timer();
@@ -164,7 +202,6 @@ public class MainActivity extends AppCompatActivity {
     public void timer() {
 
         final TextView timerTextView = findViewById(R.id.timer);
-        final EditText userInput = findViewById(R.id.userInput);
 
         new CountDownTimer(30000, 1000) {
 
@@ -182,12 +219,47 @@ public class MainActivity extends AppCompatActivity {
         }.start();
     }
 
+    public boolean isValid(String word) {
+
+        boolean valid = true;
+
+        word = word.toLowerCase();
+        generatedString = generatedString.toLowerCase();
+
+        char[] chars = word.toCharArray();
+
+        Character filler = Character.MIN_VALUE;
+
+        for (char c : chars) {
+            int charIndex = generatedString.indexOf(c);
+
+            if (charIndex != -1) {
+                char[] generatedChars = generatedString.toCharArray();
+                generatedChars[charIndex] = filler;
+                generatedString = new String(generatedChars);
+            } else {
+                valid = false;
+            }
+        }
+
+        return valid;
+    }
     public void startAnswerCheck(View view) {
-
-        EditText userInput = findViewById(R.id.userInput);
         String word = userInput.getText().toString();
+        if (isValid(word)) {
+            new CallbackTask().execute(inflections());
+        } else {
+            Toast.makeText(this, "Input is not valid", Toast.LENGTH_SHORT).show();
+        }
+    }
 
-        new CallbackTask().execute(inflections());
+    public void startAnswerCheck() {
+        String word = userInput.getText().toString();
+        if (isValid(word)) {
+            new CallbackTask().execute(inflections());
+        } else {
+            Toast.makeText(this, "Input is not valid", Toast.LENGTH_SHORT).show();
+        }
     }
 
 
@@ -199,6 +271,10 @@ public class MainActivity extends AppCompatActivity {
 
         final String word_id = word.toLowerCase(); //word id is case sensitive and lowercase is required
         return "https://od-api.oxforddictionaries.com:443/api/v1/inflections/" + language + "/" + word_id;
+    }
+
+    public void restart(View view) {
+
     }
 
 
@@ -220,6 +296,7 @@ public class MainActivity extends AppCompatActivity {
 
                 statusCode = urlConnection.getResponseCode();
                 Log.d("Status", String.valueOf(statusCode));
+
                 return String.valueOf(statusCode);
 
             } catch (Exception e) {
@@ -232,14 +309,69 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
-
-            useResult(result);
-            Log.d("Result", result);
+            useResult(statusCode);
         }
+
+
     }
 
-    public void useResult(String result) {
+    public void useResult(int status) {
+        final TextView resultText = findViewById(R.id.result);
+        final String word = userInput.getText().toString();
 
+        switch(status) {
+
+            case 200:
+
+                new Thread() {
+                    public void run() {
+                        MainActivity.this.runOnUiThread(new Runnable() {
+                            public void run() {
+
+                                resultText.setText("Congratulations! You found the word '" +
+                                        word +
+                                        "' from the characters '" +
+                                        resultString +
+                                        "'. \n\nYou scored " +
+                                        String.valueOf(word.length()) +
+                                        " points.");
+                            }
+                        });
+                    }
+                }.start();
+
+                break;
+
+            case 404:
+
+                new Thread() {
+                    public void run() {
+                        MainActivity.this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText(MainActivity.this, "Sorry, that's" +
+                                                " not a word.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }.start();
+
+                break;
+
+            default:
+
+                new Thread() {
+                    public void run() {
+                        MainActivity.this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText(MainActivity.this, "Somethings gone " +
+                                                "wrong, try again",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }.start();
+        }
     }
 }
 
