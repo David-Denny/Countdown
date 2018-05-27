@@ -3,11 +3,23 @@ package dave.countdown;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telecom.Call;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+
+import javax.net.ssl.HttpsURLConnection;
+
+import android.os.AsyncTask;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Random;
 
@@ -28,8 +40,7 @@ public class MainActivity extends AppCompatActivity {
     Random rand;
     TextView[] textViews;
     boolean timerFlag;
-
-
+    int statusCode;
 
 
     @Override
@@ -70,26 +81,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void getVowel (View view) {
+    public void getVowel(View view) {
 
         // generate pseudo random vowel
         char character = vowels.charAt(rand.nextInt(vowels.length()));
 
         // add one to the character count
-        charCount ++;
+        charCount++;
         Log.d("Char", String.valueOf(character));
 
         addCharacter(character);
 
-  }
+    }
 
-    public void getConsonant (View view) {
+    public void getConsonant(View view) {
 
         // generate pseudo random consonant
         char character = consonants.charAt(rand.nextInt(consonants.length()));
 
         // add one to the character count
-        charCount ++;
+        charCount++;
 
         Log.d("Consonant", String.valueOf(character));
 
@@ -153,6 +164,7 @@ public class MainActivity extends AppCompatActivity {
     public void timer() {
 
         final TextView timerTextView = findViewById(R.id.timer);
+        final EditText userInput = findViewById(R.id.userInput);
 
         new CountDownTimer(30000, 1000) {
 
@@ -165,8 +177,69 @@ public class MainActivity extends AppCompatActivity {
             public void onFinish() {
                 timerTextView.setText("You're out of time!");
 
-
+                userInput.setEnabled(false);
             }
         }.start();
     }
+
+    public void startAnswerCheck(View view) {
+
+        EditText userInput = findViewById(R.id.userInput);
+        String word = userInput.getText().toString();
+
+        new CallbackTask().execute(inflections());
+    }
+
+
+    private String inflections() {
+        final String language = "en";
+
+        EditText userInput = findViewById(R.id.userInput);
+        String word = userInput.getText().toString();
+
+        final String word_id = word.toLowerCase(); //word id is case sensitive and lowercase is required
+        return "https://od-api.oxforddictionaries.com:443/api/v1/inflections/" + language + "/" + word_id;
+    }
+
+
+    //in android calling network requests on the main thread forbidden by default
+    //create class to do async job
+    private class CallbackTask extends AsyncTask<String, Integer, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            final String app_id = "0c92f591";
+            final String app_key = "af3bcd697e793cf622c612a0f8cac2f4";
+            try {
+                URL url = new URL(params[0]);
+                HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
+                urlConnection.setRequestProperty("Accept", "application/json");
+                urlConnection.setRequestProperty("app_id", app_id);
+                urlConnection.setRequestProperty("app_key", app_key);
+
+                statusCode = urlConnection.getResponseCode();
+                Log.d("Status", String.valueOf(statusCode));
+                return String.valueOf(statusCode);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return e.toString();
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+
+            useResult(result);
+            Log.d("Result", result);
+        }
+    }
+
+    public void useResult(String result) {
+
+    }
 }
+
