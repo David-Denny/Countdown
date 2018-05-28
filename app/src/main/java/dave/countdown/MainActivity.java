@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
@@ -49,6 +50,17 @@ public class MainActivity extends AppCompatActivity {
     String resultString;
     Button restartButton;
     MediaPlayer mp;
+    int count9;
+    int count8;
+    int count7;
+    int count6;
+    int time9;
+    int time8;
+    int time7;
+    int time6;
+    int currentTime;
+    SharedPreferences preferences;
+    public static final String MyPREFERENCES = "myprefs";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +116,31 @@ public class MainActivity extends AppCompatActivity {
                 return handled;
             }
         });
+
+        preferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+
+        count9 = preferences.getInt("count9", -1);
+        count8 = preferences.getInt("count8", -1);
+        count7 = preferences.getInt("count7", -1);
+        count6 = preferences.getInt("count6", -1);
+        time9 = preferences.getInt("time9", -1);
+        time8 = preferences.getInt("time8", -1);
+        time7 = preferences.getInt("time7", -1);
+        time6 = preferences.getInt("time6", -1);
+
+        // if the SharedPreferences object is empty (when value is default), initialises all
+        // stat variables as 0 because this must be first time start up or stats have been wiped.
+        if (count9 == -1) {
+            count9 = 0;
+            count8 = 0;
+            count7 = 0;
+            count6 = 0;
+            time9 = 0;
+            time8 = 0;
+            time7 = 0;
+            time6 = 0;
+        }
+
     }
 
 
@@ -209,9 +246,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void timer() {
 
+        // play countdown music once timer starts
         final TextView timerTextView = findViewById(R.id.timer);
         mp = MediaPlayer.create(this, R.raw.music);
         mp.start();
+
+
         new CountDownTimer(30000, 1000) {
 
 
@@ -219,6 +259,8 @@ public class MainActivity extends AppCompatActivity {
             public void onTick(long millisUntilFinished) {
 
                 timerTextView.setText("Seconds remaining: " + millisUntilFinished / 1000);
+
+                currentTime = (int) (30 - millisUntilFinished / 1000);
 
             }
             @SuppressLint("SetTextI18n")
@@ -362,6 +404,43 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }.start();
 
+
+                switch(word.length()) {
+                    case 9:
+                        count9 ++;
+                        if (currentTime > time9) {
+                            time9 = currentTime;
+                        }
+
+                        break;
+
+                    case 8:
+                        count8 ++;
+                        if (currentTime > time8) {
+                            time8 = currentTime;
+                        }
+                        break;
+
+                    case 7:
+
+                        count7 ++;
+                        if (currentTime > time7) {
+                            time7 = currentTime;
+                        }
+                        break;
+
+                    case 6:
+
+                        count6 ++;
+                        if (currentTime > time6) {
+                            time6 = currentTime;
+                        }
+                        break;
+
+                    default:
+                        break;
+
+                }
                 break;
 
             case 404:
