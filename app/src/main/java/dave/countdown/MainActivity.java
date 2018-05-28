@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     String generatedString;
     String resultString;
     Button restartButton;
+    MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -209,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
     public void timer() {
 
         final TextView timerTextView = findViewById(R.id.timer);
-        final MediaPlayer mp = MediaPlayer.create(this, R.raw.music);
+        mp = MediaPlayer.create(this, R.raw.music);
         mp.start();
         new CountDownTimer(30000, 1000) {
 
@@ -292,6 +293,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void restart(View view) {
+        mp.stop();
         finish();
         startActivity(getIntent());
     }
