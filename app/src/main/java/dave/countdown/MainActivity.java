@@ -643,7 +643,7 @@ public class MainActivity extends AppCompatActivity {
         editor.putInt("count8", count8);
         editor.putInt("count7", count7);
         editor.putInt("count6", count6);
-        editor.putInt("time9", -1);
+        editor.putInt("time9", time9);
         editor.putInt("time8", time8);
         editor.putInt("time7", time7);
         editor.putInt("time6", time6);
