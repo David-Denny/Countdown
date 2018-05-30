@@ -26,14 +26,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
             android:text="No. of 9 Scores:"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/textView2"
-            app:layout_constraintEnd_toStartOf="@+id/noOf9"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
@@ -41,14 +38,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
             android:text="No. of 8 Scores:"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/textView3"
-            app:layout_constraintEnd_toStartOf="@+id/noOf8"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
@@ -56,14 +50,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
             android:text="No. of 7 Scores:"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/textView4"
-            app:layout_constraintEnd_toStartOf="@+id/noOf7"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
@@ -71,14 +62,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
             android:text="No. of 6 Scores:"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/textView5"
-            app:layout_constraintEnd_toStartOf="@+id/noOf6"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
@@ -86,14 +74,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
-            android:text="Fastest 9 Score:"
+            android:text="Time Taken (9):"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/textView6"
-            app:layout_constraintEnd_toStartOf="@+id/fastest9"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
@@ -101,14 +86,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
-            android:text="Fastest 8 Score:"
+            android:text="Time Taken (8):"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/textView7"
-            app:layout_constraintEnd_toStartOf="@+id/fastest8"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
@@ -116,14 +98,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
-            android:text="Fastest 7 Score:"
+            android:text="Time Taken (7):"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/textView8"
-            app:layout_constraintEnd_toStartOf="@+id/fastest7"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
@@ -131,14 +110,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
-            android:text="Fastest 6 Score:"
+            android:text="Time Taken (6):"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/fastest6"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
@@ -146,104 +122,104 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
             android:text="TextView"
             android:textColor="#000"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/noOf8"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintStart_toEndOf="@+id/textView" />
 
         <TextView
             android:id="@+id/noOf8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:textColor="#000"
-            android:layout_marginRight="8dp"
-            android:textSize="18sp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
             android:text="TextView"
+            android:textColor="#000"
+            android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/noOf7"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintStart_toEndOf="@+id/textView2" />
 
         <TextView
             android:id="@+id/noOf7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:text="TextView"
             android:textColor="#000"
             android:textSize="18sp"
-            android:layout_marginRight="8dp"
-            android:text="TextView"
             app:layout_constraintBottom_toTopOf="@+id/noOf6"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintStart_toEndOf="@+id/textView3" />
 
         <TextView
             android:id="@+id/noOf6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:textSize="18sp"
-            android:layout_marginEnd="8dp"
-            android:textColor="#000"
-            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
             android:text="TextView"
+            android:textColor="#000"
+            android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/fastest9"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintStart_toEndOf="@+id/textView4" />
 
         <TextView
             android:id="@+id/fastest9"
             android:layout_width="wrap_content"
-            android:textColor="#000"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:textSize="18sp"
-            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
             android:text="TextView"
+            android:textColor="#000"
+            android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/fastest8"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintStart_toEndOf="@+id/textView5" />
 
         <TextView
             android:id="@+id/fastest8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:text="TextView"
             android:textColor="#000"
             android:textSize="18sp"
-            android:layout_marginRight="8dp"
-            android:text="TextView"
             app:layout_constraintBottom_toTopOf="@+id/fastest7"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintStart_toEndOf="@+id/textView6" />
 
         <TextView
             android:id="@+id/fastest7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:textSize="18sp"
-            android:textColor="#000"
-            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
             android:text="TextView"
+            android:textColor="#000"
+            android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/fastest6"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintStart_toEndOf="@+id/textView7" />
 
         <TextView
             android:id="@+id/fastest6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#000"
             android:layout_marginBottom="8dp"
-            android:textSize="18sp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
             android:text="TextView"
+            android:textColor="#000"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintStart_toEndOf="@+id/textView8" />
 
     </android.support.constraint.ConstraintLayout>
 

@@ -4,12 +4,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.Arrays;
+
+/**
+ * This class displays the user's personal statistics that they've gained while playing.
+ *
+ * This includes the number of times they've found a valid word of length 9, 8, 7, and 6. It also
+ * shows the user the fastest times they've found words in.
+ *
+ * It only shows statistics for the words of score 6 and above as anything below 6 is more common
+ * and isn't worth the effort to implement.
+ *
+ * @author David Denny
+ */
 public class Stats extends AppCompatActivity {
 
     int count9;
@@ -52,17 +64,35 @@ public class Stats extends AppCompatActivity {
 
 
         score9Text.setText(String.valueOf(count9));
-//        score8Text.setText(count8);
-//        score7Text.setText(count7);
-//        score6Text.setText(count6);
-//
-//        time9Text.setText(time9);
-//        time8Text.setText(time8);
-//        time7Text.setText(time7);
-//        time6Text.setText(time6);
+        score8Text.setText(String.valueOf(count8));
+        score7Text.setText(String.valueOf(count7));
+        score6Text.setText(String.valueOf(count6));
 
+        // makes arrays of the TextViews and variables
+        TextView[] textViews = {time9Text, time8Text, time7Text, time6Text};
+        Integer[] timeArray = {time9, time8, time7, time6};
+
+        int count = 0;
+
+        // for.. each loop that sets the TextView's text to a stand in if they have no value
+        // or their value.
+        for (int timeVariable : timeArray) {
+
+            if (timeVariable == -1) {
+                textViews[count].setText("-");
+            } else {
+                textViews[count].setText(String.valueOf(timeVariable));
+            }
+
+            count ++;
+        }
     }
 
+    /**
+     * Sends the user back to the main screen of the app.
+     *
+     * @param view takes a View as a parameter so it can be called via an xml button
+     */
     public void sendToMain(View view) {
 
         Intent sendToMain = new Intent(Stats.this, MainActivity.class);

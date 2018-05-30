@@ -85,6 +85,8 @@ public class MainActivity extends AppCompatActivity {
         vowels = "AEIOU";
         consonants = "BCDFGHJKLMNPQRSTVWXZ";
 
+        // make array of TextViews that holds the TextViews that'll be used to display the 9
+        // characters
         char1 = findViewById(R.id.char1);
         char2 = findViewById(R.id.char2);
         char3 = findViewById(R.id.char3);
@@ -108,16 +110,24 @@ public class MainActivity extends AppCompatActivity {
 
         rand = new Random();
 
+        // used to keep track of the amount of characters already generated
         charCount = 0;
 
+
+        // used to display in results
         generatedString = "";
+
+        // used to prevent timer being restarted before it's ended
         timerFlag = false;
 
+        // hide restart button and prevent user from typing before the timer starts
         restartButton = findViewById(R.id.restartButton);
         restartButton.setVisibility(View.GONE);
         userInput = findViewById(R.id.userInput);
         userInput.setEnabled(false);
 
+        // when the user clicks enter on the soft keyboard, hide the keyboard and
+        // call startAnswerCheck()
         userInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -132,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // make the SharedPreferences object and get the statistics values from it
         preferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
         count9 = preferences.getInt("count9", -1);
@@ -150,10 +161,10 @@ public class MainActivity extends AppCompatActivity {
             count8 = 0;
             count7 = 0;
             count6 = 0;
-            time9 = 0;
-            time8 = 0;
-            time7 = 0;
-            time6 = 0;
+            time9 = -1;
+            time8 = -1;
+            time7 = -1;
+            time6 = -1;
         }
 
     }
@@ -312,6 +323,8 @@ public class MainActivity extends AppCompatActivity {
         mp = MediaPlayer.create(this, R.raw.music);
         mp.start();
 
+        // restarts timer
+        currentTime = 0;
 
         new CountDownTimer(30000, 1000) {
 
@@ -437,7 +450,9 @@ public class MainActivity extends AppCompatActivity {
      * @param view takes a View as an argument so the method can be called from an xml button.
      */
     public void restart(View view) {
+
         mp.stop();
+        saveStats();
         finish();
         startActivity(getIntent());
     }
@@ -448,6 +463,8 @@ public class MainActivity extends AppCompatActivity {
      * @param view  takes a View as an argument so the method can be called from an xml button
      */
     public void sendToStats(View view) {
+
+        saveStats();
         Intent sendToStats = new Intent(MainActivity.this, Stats.class);
         startActivity(sendToStats);
     }
@@ -613,6 +630,25 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }.start();
         }
+    }
+
+    /**
+     * Saves the current statistics to the SharedPreferences object so it can be accessed later
+     * in the Stats activity.
+     */
+    public void saveStats() {
+        SharedPreferences.Editor editor = preferences.edit();
+
+        editor.putInt("count9", count9);
+        editor.putInt("count8", count8);
+        editor.putInt("count7", count7);
+        editor.putInt("count6", count6);
+        editor.putInt("time9", -1);
+        editor.putInt("time8", time8);
+        editor.putInt("time7", time7);
+        editor.putInt("time6", time6);
+
+        editor.apply();
     }
 }
 
